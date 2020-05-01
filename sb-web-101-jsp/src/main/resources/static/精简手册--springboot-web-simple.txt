@@ -1,0 +1,105 @@
+-------------
+1.清除浏览器换出 ctrl + shift + delete
+
+
+================================================ web static
+----
+功能：仅仅是静态资源访问 和 Controller 能访问 不能访问数据库
+（springboot 中.properties .yml  作用相同 只是赋值方式不一样，下面就用 .properties）
+---- 流程
+1. 创建一个 springboot 项目 打jar 包
+
+2.至少需要的依赖有：1. Spring web   2. thymeleaf(用于页面访问)
+
+3.springboot 会自动有以下四个部分（1个继承 2个依赖 1个插件 1个服务器）
+	1）继承：自动继承 继承父类集成jar 包
+ 	2）依赖  1.springboot starter 启动依赖 2.springboot starter test 测试启动依赖
+    3）插件：maven-plugin maven插件 
+    4）自带tomcat
+    
+3.在还需要在配置文件 .properties 中配置 端口号
+	server.port=8080
+
+4.静态访问
+	1） 在资源目录~~ src/main/resources 中的新建文件夹 static，然后在里面新建一个文件 hello.html
+ 	2）点击项目右键 springboot App 启动
+ 	3）浏览器访问：http://localhost:8080/hello.html
+ 	4）出现了hello.html 里面的内容，访问成功！
+ 
+5.Controller 转发访问
+	1）在主启动类下面子包中新建 controller包 Controller类，访问方法，跳转页面URL
+	拦截URL: http://localhost:8080/good
+	2）在 .properties 添加视图解析器 解析路径  配置如下
+	#spring web
+spring.thymeleaf.prefix=classpath:/templates/pages/
+spring.thymeleaf.suffix=.html
+	3）在资源目录~~ src/main/resources 中templates 里面新建文件夹/页面 pages/good.html
+	4）浏览器访问：http://localhost:8080/good
+
+
+	-------------
+	介绍：
+	=========================================================================================
+
+	================== 1 资源访问
+	
+	================== thymeleaf 跳转设置
+	#spring web
+	 spring.thymeleaf.prefix=classpath:/templates/pages/
+	 spring.thymeleaf.suffix=.html
+	 
+	================== mvc jsp 跳转设置
+mvc:         #引入mvn配置
+    view:
+      prefix: /WEB-INF/     # /默认代表根目录 src/main/webapp
+      suffix: .jsp
+      
+	================== 访问权限
+	只要项目启动，默认都可以访问静态资源，不需要权限？
+	1.springboot 是默认项目名为 / ,需要设置
+	#server
+	 server.servlet.context-path=/name
+	 
+	2.静态资源默认访问 /,默认跳转页面 index.html
+	
+	3.默认访问资源的优先级  
+	~~ src/main/resources 中的下列文件夹
+	META-INF/resources文件夹  > resources文件夹 > static文件夹 > public文件夹
+
+	4.Controller转发资源访问优先级 和静态资源一样
+	META-INF/resources文件夹  > resources文件夹 > static文件夹 > public文件夹	
+
+	5.一般会对 Controller 访问跳转页面 进行设置
+	#spring web
+	 spring.thymeleaf.prefix=classpath:/templates/pages/
+	 spring.thymeleaf.suffix=.html
+
+!!!!
+	6.有jsp页面的打包 war包，没有打jar包。
+	jsp 访问在 # /默认代表根目录 src/main/webapp 
+项目没有webapp  这个目录，需要手动创建，或者设置出来
+设置：项目右键 --》Maven --> Project Facets --> Dynamic Web Module(没勾就勾上，已经勾 去掉)
+	
+	 mvc:       
+    view:
+      prefix: /WEB-INF/    
+      suffix: .jsp
+
+	================== 2 资源目录
+	1.默认
+	springboot 框架默认生成templates目录
+
+	2.目录可以自己在~~ src/main/resources 中 创建文件夹
+	
+	================== 3 依赖
+	依赖只是在启动时生效，修改依赖后 需要重启 ！！！
+	----
+	.properties 使用thymeleaf 标签必须加 thymeleaf依赖，改动 配置需要重启。
+
+
+	
+	================== 4 配置文件 .properties .yml
+	（springboot 中.properties .yml  作用相同 只是赋值方式不一样，下面就只用 .properties）
+	注意：修改配置文件后 项目需要重启
+	
+	================== 5 
