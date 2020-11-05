@@ -33,45 +33,32 @@
 		<th>名字</th>
 		<th>年龄</th>
 		<th>性别</th>
+		<th class="width-40">来呀</th>
 		<th class="width-40">操作</th>
 
 	</tr>
-	<!-- jsp 使用的是 jstl标签, JSP 标准标签库（JSTL）https://www.runoob.com/jsp/jsp-jstl.html-->
-	<!--  
-	JSTL支持通用的、结构化的任务，比如迭代，条件判断，XML文档操作，国际化标签，SQL标签。 除了这些，它还提供了一个框架来使用集成JSTL的自定义标签。
 
-根据JSTL标签所提供的功能，可以将其分为5个类别。
-
-核心标签
-格式化标签
-SQL 标签
-XML 标签
-JSTL 函数
-	 -->
-	<!--  -->
-	<!--  -->
-	<!--  -->
-	<!-- c:for each  var=user对象    通过 ${ 目标对象key } 获取对象,    varStatus="status" -->
-	<!-- tr 一行    td 行内列   计数 序号   ${  status.count } 显示属性 ${  user.id }    -->
-	
-	
 	<!-- 模版数据 -->
-<c:forEach items="${ list }"  var="user" varStatus="status">
+	<!-- c:for each  var=user对象  varStatus="status" -->
+	<!-- tr 一行    td 行内列   计数 序号   ${  status.count } 显示属性 ${  user.id }    -->
+	<c:forEach items="${  list }" var="user" varStatus="status">
 	<tr>
-		<td>${ status.count }</td>
-		<td>${ user.id }</td>
-		<td>${ user.name }</td>
-		<td>${ user.age }</td>
-		<td>${ user.sex }</td>
+		<td>${  status.count }</td>  <!-- status.count 用于计数 -->
+		<td>${  user.id }</td>  	<!-- user 对象属性 -->
+		<td>${  user.name }</td> 
+		<td>${  user.age }</td> 
+		<td>${  user.sex }</td> 
+		<td>你喜欢干嘛都行</td>
 		<td>
 			<a href="doorDelete?id=${ user.id }">删除</a>
 			&nbsp;|&nbsp;
 			<a href="doorInfo?id=${ user.id }">修改</a>
 		</td>
 	</tr>
-</c:forEach>
+	
+	</c:forEach>
 
-
+<!-- 你需要写一点 JSP 标签的小 demo -->
 	
 </table>
 </body><!-- body-end  -->

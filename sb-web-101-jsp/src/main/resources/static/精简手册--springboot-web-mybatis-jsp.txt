@@ -1,15 +1,16 @@
-================================================ web + mybatis +js jq
+================================================ web + mybatis +jsp
 ----
-	功能：做一个简单的 能访问数据库 使用js jq 展示页面 的项目 
+	功能：做一个简单的 能访问数据库 使用jsp 展示页面 的项目 
 	
 ----步骤：
-====================1.创建 一个springboot 项目 打jar包
+====================1.创建 一个springboot 项目 打war包
 
 ====================2.必须添加依赖
-	 1）页面：1. Spring web  2.Thymeleaf (不一定)
-	 2）数据库：3.JDBC 4. MySQL Driver  5. mybatis
+	 1）页面：1. Spring web  2.servlet 和 jstl,tomcat-embed-jasper（用于对 jsp 的支持）
+	 2)  用于对 jsp 的支持 依赖需要手动添加
+	 3）数据库：3.JDBC 4. MySQL Driver  5. mybatis
 	
-	 3）不必须其他依赖可以按照需要添加
+	 4）不必须其他依赖可以按照需要添加
 		5. Lombok 6. Spring Configuration Processor 7.Spring Boot DevTools
 		8. Spring Boot Actuator 9. Thymeleaf  10.mybatis-plus
 		
@@ -18,11 +19,11 @@
 	 1）服务器信息配置
 	 2）spring 配置 数据库信息 数据源JDBC  数据库IP地址 端口号 数据库名称 时区 字符编码集 等
 				 需要 1.数据库名字 2.访问用户名 ，密码
-	 3) spring 配置 添加视图解析器     #使用 Thymeleaf 配置
+	 3) spring 配置 添加视图解析器     #引入mvn配置
 	 	   
   	4）数据库框架配置 Mybatis配置 和开启日志
 
-		下面是完整版    和jsp 绝大部分一样  #视图解析器配置  只有视图解析器不一样
+		下面是完整版        大部分和 js jq 配置一样，只有视图解析器不一样
 	 #### #### #### #### #### ####->
 	 
 server:
@@ -36,11 +37,12 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/jtdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
     username: root
     password: root
-    
- #视图解析器配置  只有视图解析器不一样               只有视图解析器不一样
-  thymeleaf:
-   prefix: classpath:/templates/pages/
- # 使用 templates 文件夹需要 添加templates依赖
+#视图解析器配置  只有视图解析器不一样
+  mvc:       
+    view:
+      prefix: /WEB-INF/    
+      suffix: .jsp
+ # /默认代表根目录 src/main/webapp   
 
  #数据库配置
 mybatis: 
@@ -51,12 +53,19 @@ mybatis:
 logging:
   level:
     com.per: debug
+    
+	   # <-   ------可能的问题：webapp不存在  -----
 
      #### #### #### #### #### ####<-
 
 
  ==================== 4.确定发现 创建文件 和目录
- 1）.在目录 src/main/templates/ 创建 这个 pages目录 ，在里面 建立 html 文件
+ 1）.在/默认代表根目录 src/main/webapp 创建 这个 WEB-INF目录 ，在里面
+ 建立 jsp 文件
+
+ **** 项目没有webapp  这个目录，需要手动创建，或者设置出来
+设置：项目右键 --》Maven --> Project Facets --> Dynamic Web Module(没勾就勾上，已经勾 去掉)
+
 	
  2）.在这个目录下 创建/mybatis/mappers/*.xml  和xml文件
  3）.创建DAO  Service ServiceImpl Controller ,构建类和方法
@@ -65,13 +74,13 @@ logging:
   ----Controller 添加 @Controller @@RequestMapping @ResponseBody @RestController 
   @RequestParam 参数属性设置 属性有：一定有，名字固定
 
- 4）.Test 测试，从DAO -->Service -->Controller	
+ 4）.Test 测试，从DAO -->Service -->Controller
  5).浏览器测试
 
-	
+
  
- ====================5.构建 建立 js jq 的html 文件 
- 见本文件夹 unarmed-now\pages user_list_jq.html
+ ====================5.构建 建立 jsp 文件 
+ 见本文件夹 unarmed-now\pages\jsp user_list_jsp.jsp
 
 
 	3.

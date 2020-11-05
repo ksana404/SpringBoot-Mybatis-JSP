@@ -21,8 +21,9 @@ public class UserController {
 	
 
 	
-	/**jsp 访问
-	 * http://localhost:8084/user/findJSP
+	/**
+	 * jsp 访问
+	 * http://localhost:8090/user/findJSP
 	 * */
 	@RequestMapping("findJSP")
 	public Object doFindJSP(Model model) {
@@ -30,7 +31,8 @@ public class UserController {
 	
 	model.addAttribute("list",list);
 	
-		return "user_list_jsp";
+		//return "user_list_jsp";
+		return "user_list_jsp2";
 		
 	}
 
